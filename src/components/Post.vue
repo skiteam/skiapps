@@ -6,15 +6,15 @@
         <button class="both">どっちも</button>
     </div>
     <div class="format">
-        <!-- <textarea type="text" rows="5" maxlength="1000" v-model="postContents" />
+        <textarea type="text" rows="5" maxlength="1000" v-model="postContents" />
         <p>
         <input type="file" v-on:change="selectImage" name="file" accept="image/jpeg, image/png" multiple>
 
         <div class="picture" v-if="selectedImage">
             <img:sre="selectedImage" alt="選択された画像" class="image">
-        </div> -->
+        </div>
         <div> 
-            <!-- <input type="button" class="posting" value="投稿">  -->
+            <input type="button" class="posting" value="投稿"> 
             
             <textarea v-model="text"/>
             <button v-on:click="postTweet">ツイート</button>
@@ -34,8 +34,8 @@ export default {
     data() {
     return {
       text:"",
-    //   postContents: "",
-    //   selectedImage: null,
+      postContents: "",
+      selectedImage: null,
       tweets: [],
     }
   },
@@ -54,24 +54,24 @@ export default {
         });
 
       },
-    //   getFileAsBase64 : function(filePath) {
-    //         return new Promise((resolve, reject) => {
-    //             const reader = new FileReader();
-    //             reader.onload = e => resolve(e.target.result);
-    //             reader.onerror = error => reject(error);
-    //             reader.readAsDataURL(filePath);
-    //             })
-    //     },  
-    //   selectImage:function(e){
-    //       let files = e.target.files;
-    //         e.preventDefault();
-    //          if(files && files.length > 0){
-    //              this.getFileAsBase64(files[0])
-    //             .then((imgDataBase64)=>{
-    //                 this.selectedImage = imgDataBase64;
-    //             });
-    //   }
-    //   },
+      getFileAsBase64 : function(filePath) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = e => resolve(e.target.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(filePath);
+                })
+        },  
+      selectImage:function(e){
+          let files = e.target.files;
+            e.preventDefault();
+             if(files && files.length > 0){
+                 this.getFileAsBase64(files[0])
+                .then((imgDataBase64)=>{
+                    this.selectedImage = imgDataBase64;
+                });
+      }
+      },
    created: function(){
       firebase
       .firestore()
