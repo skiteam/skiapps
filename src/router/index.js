@@ -2,7 +2,7 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 import Home from "../views/Home.vue"
 import About from "../views/About.vue"
-import MyPage from "../views/MyPage.vue"
+import post from "../views/post.vue"
 
 Vue.use(VueRouter)
 
@@ -18,9 +18,9 @@ const routes = [
     component: About,
   },
   {
-    path: "/my-page",
-    name: "MyPage",
-    component: MyPage,
+    path: "/post",
+    name: "post",
+    component: post,
   },
 ]
 
