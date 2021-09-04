@@ -8,19 +8,19 @@
     <div class="format">
         <textarea type="text" rows="5" maxlength="1000" v-model="postContents" />
         <p>
-        <input type="file" v-on:change="selectImage" name="file" accept="image/jpeg, image/png" multiple>
+        <input type="file"  ref="preview" v-on:change="selectImage" name="file" accept="image/jpeg, image/png" multiple>
 
-        <div class="picture" v-if="selectedImage">
-            <img:sre="selectedImage" alt="選択された画像" class="image">
+        <div class="picture" v-if="selectedImageUrl">
+            <img :src="selectedImageUrl" alt="選択された画像" class="image">
         </div>
         <div> 
-            <input type="button" class="posting" value="投稿"> 
+            <input type="submit" v-on:click="post" class="posting" value="投稿"> 
             
-            <textarea v-model="text"/>
+            <!-- <textarea v-model="text"/>
             <button v-on:click="postTweet">ツイート</button>
              <p v-for="item in tweets" :key="item.id">
               {{item.text}}
-            </p>
+            </p> -->
         </div>   
     </div>
  </div>
@@ -33,18 +33,18 @@ import firebase from "firebase";
 export default {
     data() {
     return {
-      text:"",
       postContents: "",
-      selectedImage: null,
+      selectedImageUrl: "",
       tweets: [],
     }
   },
   methods: {
-      postTweet() {
-    const item = {
-        text:this.text 
-      };
-        firebase.firestore().collection("tweets")
+      post(){
+          const item = {
+              postContents:this.postContents,
+              selectedImageUrl:this.selectedImageUrl,
+          };
+              firebase.firestore().collection("tweets")
         .add(item)
         .then(ref => {
           this.tweets.push({
@@ -52,25 +52,25 @@ export default {
             ...item
           });
         });
-
-      },
-      getFileAsBase64 : function(filePath) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = e => resolve(e.target.result);
-                reader.onerror = error => reject(error);
-                reader.readAsDataURL(filePath);
-                })
-        },  
-      selectImage:function(e){
-          let files = e.target.files;
-            e.preventDefault();
-             if(files && files.length > 0){
-                 this.getFileAsBase64(files[0])
-                .then((imgDataBase64)=>{
-                    this.selectedImage = imgDataBase64;
-                });
-      }
+          },
+      
+    //   postTweet() {
+    // const item = {
+    //     text:this.text 
+    //   };
+    //     firebase.firestore().collection("tweets")
+    //     .add(item)
+    //     .then(ref => {
+    //       this.tweets.push({
+    //         id: ref.id,
+    //         ...item
+    //       });
+    //     });
+    //   },
+      selectImage:function(){
+         console.log(this.$refs.preview.files[0])
+         const file = this.$refs.preview.files[0];
+         this.selectedImageUrl = URL.createObjectURL(file)
       },
    created: function(){
       firebase
@@ -85,10 +85,11 @@ export default {
           });
         });
       });
-  }
   },
-
+  }
 }
+
+
 
 </script>
 
