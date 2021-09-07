@@ -9,54 +9,52 @@
       <p class="user-name">{{ user.name }}</p>
     </div>
     <div class="content" v-html="whisper.content"></div>
-    <button v-if="currentUser && currentUser.uid == user.id" @click="showBtns = !showBtns">
+    <button
+      v-if="currentUser && currentUser.uid == user.id"
+      @click="showBtns = !showBtns"
+    >
       <fa icon="ellipsis-v" />
     </button>
     <div v-if="showBtns" class="controls">
-      
-      <li @click="deleteWhisper" style="color: red">
-        delete
-      </li>
+      <li @click="deleteWhisper" style="color: red">delete</li>
     </div>
   </li>
 </template>
 
 <script>
-import { db } from '../main'
-import { auth } from '../main'
-import firebase from 'firebase/compat/app';
+import { db } from "@/firebase.js"
+import { auth } from "@/firebase.js"
 
 export default {
-  props: ['id','uid'],
-  data () {
+  props: ["id", "uid"],
+  data() {
     return {
       whisper: {},
       user: {},
-     currentUser: {},
-     showBtns: false
+      currentUser: {},
+      showBtns: false,
     }
   },
-  created () {
-    auth.onAuthStateChanged(user => {
+  created() {
+    auth.onAuthStateChanged((user) => {
       this.currentUser = user
     })
   },
-  firestore () {
+  firestore() {
     return {
-      whisper: db.collection('whispers').doc(this.$props.id),
-      user: db.collection('users').doc(this.$props.uid)
+      whisper: db.collection("whispers").doc(this.$props.id),
+      user: db.collection("users").doc(this.$props.uid),
     }
   },
   methods: {
-    deleteWhisper () {
-      if (window.confirm('Are You Sure to Delete This Whisper?')) {
-        db.collection('whispers').doc(this.$props.id).delete()
+    deleteWhisper() {
+      if (window.confirm("Are You Sure to Delete This Whisper?")) {
+        db.collection("whispers").doc(this.$props.id).delete()
       }
-    }
+    },
   },
 }
 </script>
-
 
 <style lang="stylus">
 .item
@@ -82,7 +80,7 @@ export default {
       &:focus
         outline none
     .message
-      opacity 0  
+      opacity 0
       position absolute
       bottom 5px
       right 10px
@@ -107,7 +105,7 @@ export default {
       width 50px
   .content
     padding 10px
- 
+
   button
     position absolute
     top 5px
@@ -140,6 +138,4 @@ export default {
       opacity 1
     .controls
       opacity 1
-  
 </style>
-

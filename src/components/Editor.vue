@@ -20,25 +20,25 @@
 </template>
 
 <script>
-import { db } from "../main";
+import { db } from "@/firebase.js"
 export default {
   props: ["currentUser"],
   data() {
     return {
       newWhisper: "",
-    };
+    }
   },
   methods: {
     createWhisper() {
-      const date = new Date();
+      const date = new Date()
       db.collection("whispers")
         .add({
-          'content': this.newWhisper,
-          'date': date,
-          'uid': this.$props.currentUser.uid,
+          content: this.newWhisper,
+          date: date,
+          uid: this.$props.currentUser.uid,
         })
-        .then((this.newWhisper = ""));
+        .then((this.newWhisper = ""))
     },
   },
-};
+}
 </script>

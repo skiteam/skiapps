@@ -1,40 +1,15 @@
-<<<<<<< HEAD
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import User from '@/views/User.vue'
-
-=======
 import Vue from "vue"
 import VueRouter from "vue-router"
 import Home from "../views/Home.vue"
 import post from "../views/Posting.vue"
 import Signup from "../views/Signup.vue"
 import Signin from "../views/Signin.vue"
->>>>>>> origin/master
+import User from "@/views/User.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-<<<<<<< HEAD
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/user/:uid',
-    name: 'user',
-    component: User
-  },
-  
-]
-
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-=======
     path: "/",
     name: "Home",
     component: Home,
@@ -54,13 +29,17 @@ const router = new VueRouter({
     name: "Signin",
     component: Signin,
   },
+  {
+    path: "/user/:uid",
+    name: "user",
+    component: User,
+  },
 ]
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
->>>>>>> origin/master
 })
 
 export default router
