@@ -31,9 +31,9 @@
 
       <div class="picture" v-if="seen">
         <div v-for="(image, index) in images" v-bind:key="index">
-          {{ index }}:{{ image.name }}
+          {{ index }}:{{ image }}
+        <img :src="image" alt="選択された画像" class="image" />
         </div>
-        <img :src="selectedImage" alt="選択された画像" class="image" />
         <div v-on:click="removeImg">×</div>
       </div>
     </div>
@@ -80,7 +80,7 @@ export default {
       this.seen = true
       const file = this.$refs.preview.files[0]
       this.selectedImage = URL.createObjectURL(file)
-      const Image = { name: URL.createObjectURL(file) }
+      const Image = URL.createObjectURL(file)
       this.images.push(Image)
     },
     removeImg(index) {
