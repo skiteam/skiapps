@@ -1,34 +1,29 @@
 <template>
  <div class="container">
-    <div class="buttons">
-        <button v-on:click="makeTag" class="alcohol">ビール</button>
-        <button v-on:click="makeTag1" class="appetizer">おつまみ</button>
-        <button v-on:click="makeTag2" class="both">どっちも</button>
-    </div>
-<select v-model="selected">
+ <select v-model="selected">
   <option disabled value="">Please select one</option>
   <option>#ビール</option>
   <option>#おつまみ</option>
   <option>#どっちも</option>
-</select>
-<p>
-<span>{{ selected }}</span>
+ </select>
+ <p>
+ <span>{{ selected }}</span>
     <div class="format">
-        <input type="text" rows="1" maxlength="5" v-model="tagvalue" placeholder="↑で選択" />
-        <br>    
         <textarea type="text" rows="5" maxlength="1000" v-model="postContents" placeholder="書いてみよう！" />
         <p>
         <input type="file"  ref="preview" v-on:change="selectImage" name="file" accept="image/jpeg, image/png" multiple />
-        <div class="picture" v-if="selectedImageUrl">
-            <!-- <img v-for="selectedImageUrl in files" :key="selectedImageUrl"> -->
-            <img :src="selectedImageUrl" alt="選択された画像" class="image">
-        </div>
+        <div class="picture" v-if="seen">
+          <div v-for="(image, index) in images" v-bind:key="index" >
+          {{ index }}:{{ image.name }}
+          </div>
+            <img :src="selectedImage" alt="選択された画像" class="image">
+         <div  v-on:click="removeImg">×</div>
+        </div>  
+    </div>
         <div> 
             <input type="submit" v-on:click="post" class="posting" value="投稿"> 
         </div>   
-    </div>
- </div>
-  
+  </div>
 </template>
 
 <script>
@@ -37,12 +32,12 @@ import firebase from "firebase";
 export default {
     data() {
     return {
+      selectedImage:"",
       selected:"",
-      tagvalue:"",
       postContents: "",
-      selectedImageUrl: "",
+      seen: false,
       images:[],
-      tweets: [],
+      tweets:[],
     }
   },
   methods: {
@@ -50,7 +45,7 @@ export default {
           const item = {
               selected:this.selected,
               postContents:this.postContents,
-              selectedImageUrl:this.selectedImageUrl,
+              images:this.images,
               photos:this.images,
           };
         firebase.firestore().collection("tweets")
@@ -63,26 +58,23 @@ export default {
         });
           },
       selectImage:function(){
+        this.seen=true;
          const file = this.$refs.preview.files[0]
-         this.selectedImageUrl = URL.createObjectURL(file)
-         const Image=URL.createObjectURL(file)
+        this.selectedImage=URL.createObjectURL(file)
+         const Image={name:URL.createObjectURL(file)}
          this.images.push(Image)
          },
-      makeTag:function(){
-          this.tagvalue=""
-          const tag="#ビール"
-          this.tagvalue=tag
+    removeImg(index) {
+      if (this.$refs.preview && this.$refs.preview.value !== undefined) {
+        this.$refs.preview.value = "";
+        this.images.splice(index,1);
+      };
+      if(this.images[0] == undefined){
+        this.seen=false
+      }
+    },
       },
-      makeTag1:function(){
-          this.tagvalue=""
-          const tag="#おつまみ"
-          this.tagvalue=tag
-      },
-      makeTag2:function(){
-          this.tagvalue=""
-          const tag="#どっちも"
-          this.tagvalue=tag
-      },
+     
    created: function(){
       firebase
       .firestore()
@@ -98,7 +90,7 @@ export default {
       });
   },
   }
-}
+
 
 
 
