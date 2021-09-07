@@ -7,8 +7,16 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@vue/composition-api": "^1.1.4",
+    "firebase": "^9.0.1",
+    "sabe": "^1.0.0",
     "vue": "^2.6.11",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vue2-filters": "^0.13.0",
+    "vuefire": "^3.0.0-alpha.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-router": "~4.5.0",
