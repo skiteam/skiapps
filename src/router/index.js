@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import User from '@/views/User.vue'
 
+=======
+import Vue from "vue"
+import VueRouter from "vue-router"
+import Home from "../views/Home.vue"
+import post from "../views/Posting.vue"
+import Signup from "../views/Signup.vue"
+import Signin from "../views/Signin.vue"
+>>>>>>> origin/master
 
 Vue.use(VueRouter)
 
 const routes = [
   {
+<<<<<<< HEAD
     path: '/',
     name: 'Home',
     component: Home
@@ -24,6 +34,33 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+=======
+    path: "/",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/post",
+    name: "post",
+    component: post,
+  },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
+  },
+  {
+    path: "/signin",
+    name: "Signin",
+    component: Signin,
+  },
+]
+
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes,
+>>>>>>> origin/master
 })
 
 export default router
