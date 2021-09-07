@@ -13,7 +13,6 @@ const firebaseConfig = {
   databaseURL: "https://skiapps-7bbd6-default-rtdb.firebaseio.com",
 }
 
-
 firebase.initializeApp(firebaseConfig)
 export const db = firebase.firestore()
 export const auth = firebase.auth()
