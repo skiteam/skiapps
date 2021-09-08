@@ -33,6 +33,7 @@ export default {
     data() {
     return {
       selectedImage:"",
+      selectedImage:"",
       selected:"",
       postContents: "",
       seen: false,
