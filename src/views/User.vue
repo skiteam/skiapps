@@ -24,12 +24,11 @@
 </template>
 
 <script>
-import { db } from "../main";
-import { auth } from "../main";
-import firebase from "firebase/compat/app";
-import Item from "@/components/Item";
-import Vue2Filters from "vue2-filters";
-import Editor from "@/components/Editor";
+import { db } from "@/firebase.js"
+import { auth } from "@/firebase.js"
+import Item from "@/components/Item"
+import Vue2Filters from "vue2-filters"
+import Editor from "@/components/Editor"
 
 export default {
   components: {
@@ -41,20 +40,20 @@ export default {
       user: {},
       myWhispers: [],
       currentUser: {},
-    };
+    }
   },
   firestore() {
     return {
       user: db.collection("users").doc(this.$route.params.uid),
-    };
+    }
   },
   created() {
     auth.onAuthStateChanged((user) => {
-      this.currentUser = user;
-    });
+      this.currentUser = user
+    })
   },
   mixins: [Vue2Filters.mixin],
-};
+}
 </script>
 
 <style lang="stylus" scoped>

@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div class="home">
     <div class="list">
       <Item
@@ -9,38 +8,59 @@
         :uid="whisper.uid"
       />
     </div>
+    <div>
+      <input
+        type="submit"
+        class="button"
+        title="Sign out"
+        value="Sign out"
+        v-on:click="signout"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import Item from "@/components/Item.vue";
-import { db } from "../main";
-
-import Vue2Filters from "vue2-filters";
+import Item from "@/components/Item.vue"
+import { db } from "@/firebase.js"
+import Vue2Filters from "vue2-filters"
+import firebase from "firebase"
 
 export default {
   name: "home",
-  components: {},
+  components: {
+    Item,
+  },
 
   data() {
     return {
       whispers: [],
-    };
+    }
   },
   firestore() {
     return {
       whispers: db.collection("whispers"),
-    };
-  },
-  components: {
-    Item,
+    }
   },
   mixins: [Vue2Filters.mixin],
-};
+  methods: {
+    signout: function () {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          alert("ログアウトしました")
+          this.router.push("/")
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+  },
+
+}
 </script>
 <style lang="stylus" scoped>
-
-
 .item
   list-style none
   border-top 1px solid #eee
@@ -69,38 +89,4 @@ export default {
       width 50px
   .content
     padding 10px
-=======
-  <div>
-    <input 
-    type="submit" 
-    class="button"
-    title="Sign out"
-    value="Sign out"
-    v-on:click="signout"
-    />
-  </div>
-</template>
-<script>
-  import firebase from "firebase";
-
-  export default {
-    methods:{
-    signout: function() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          alert("ログアウトしました");
-          this.router.push("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    }
-  }
-</script>
-
-<style>
->>>>>>> origin/master
 </style>

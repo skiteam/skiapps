@@ -3,22 +3,23 @@
     <div>サイト名</div>
     <div>
       <div>あなたのメールアドレス</div>
-      <input  
+      <input
         type="email"
         name="email"
         placeholder="email"
         required="required"
-        v-model="email"/>
+        v-model="email"
+      />
     </div>
     <div>
       <div>パスワードを作成</div>
       <input
-        type="password" 
+        type="password"
         name="password"
         placeholder="password"
         required="required"
         v-model="password"
-       />
+      />
     </div>
     <!-- <div>
       <div>生年月日</div>
@@ -43,48 +44,49 @@
       </div>
     </div> -->
     <div>
-        <input 
+      <input
         type="submit"
         v-on:click="signup()"
         class="button"
         title="Sign Up"
         value="Sign Up"
-        />
+      />
     </div>
     <div>
-        <router-link :to="{ name: 'Signin' }">
-            ログインページ
-        </router-link>
+      <router-link :to="{ name: 'Signin' }"> ログインページ </router-link>
     </div>
   </div>
 </template>
 
 <script>
-    import firebase from "firebase";
+import firebase from "firebase"
 
-    //他のファイルに移動させるときに必ず必要
-    export default {
-        data: function(){
-            return {
-                email:"",
-                password:"",
-            };
-        },
-        methods:{
-            //ここのsignupは自分で作ったもの
-            signup: function(){firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-                .then(() => {
-                    alert("success")
-                    this.$router.push({ path: `Signin`});
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorCode + ":" + errorMessage);
-                });
-            }
-        }
+//他のファイルに移動させるときに必ず必要
+export default {
+  data: function () {
+    return {
+      email: "",
+      password: "",
     }
+  },
+  methods: {
+    //ここのsignupは自分で作ったもの
+    signup: function () {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          alert("success")
+          this.$router.push({ path: `Signin` })
+        })
+        .catch((error) => {
+          const errorCode = error.code
+          const errorMessage = error.message
+          alert(errorCode + ":" + errorMessage)
+        })
+    },
+  },
+}
 </script>
 
 <style></style>

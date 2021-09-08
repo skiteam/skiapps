@@ -1,27 +1,27 @@
-<<<<<<< HEAD
-<!-- App.vue -->
-
 <template>
   <div id="app">
     <Header />
-
-    <main>
+     <router-link to="/post">投稿</router-link>
+    <Navbar />
+    <Item />
       <router-view />
-    </main>
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header";
+import Header from "@/components/Header"
+import Navbar from "@/components/Navbar"
+import Item from "@/components/Item"
+
 export default {
   components: {
     Header,
+    Navbar,
+    Item
+    
   },
-};
+}
 </script>
-
-
-
 
 <style lang="stylus">
 
@@ -81,18 +81,4 @@ button
   box-shadow 0 0 6px rgba(0,0,0,.1)
   border-radius 3px
   background white
-
 </style>
-
-=======
-<template>
-  <div>
-    <div>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/Signup">Signup</router-link> |
-      <router-link to="/Signin">Signin</router-link>
-    </div>
-    <router-view />
-  </div>
-</template>
->>>>>>> origin/master
