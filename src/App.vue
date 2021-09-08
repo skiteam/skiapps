@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header />
-
+    <router-link to="/Posting">投稿</router-link>
     <main>
       <router-view />
     </main>
@@ -10,6 +10,7 @@
 
 <script>
 import Header from "@/components/Header"
+
 export default {
   components: {
     Header,
