@@ -23,9 +23,9 @@
 <script>
 import Item from "@/components/Item.vue"
 import { db } from "@/firebase.js"
-
 import Vue2Filters from "vue2-filters"
 import firebase from "firebase"
+
 export default {
   name: "home",
   components: {
@@ -57,6 +57,7 @@ export default {
         })
     },
   },
+
 }
 </script>
 <style lang="stylus" scoped>

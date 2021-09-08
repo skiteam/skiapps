@@ -1,18 +1,24 @@
 <template>
   <div id="app">
     <Header />
-
-    <main>
+     <router-link to="/post">投稿</router-link>
+    <Navbar />
+    <Item />
       <router-view />
-    </main>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header"
+import Navbar from "@/components/Navbar"
+import Item from "@/components/Item"
+
 export default {
   components: {
     Header,
+    Navbar,
+    Item
+    
   },
 }
 </script>

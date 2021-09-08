@@ -31,9 +31,9 @@
 
       <div class="picture" v-if="seen">
         <div v-for="(image, index) in images" v-bind:key="index">
-          {{ index }}:{{ image.name }}
-        </div>
-        <img :src="selectedImage" alt="選択された画像" class="image" />
+          <!-- {{ index }}:{{ image }} -->
+        <img :src="image" alt="選択された画像" class="image" />
+         </div>
         <div v-on:click="removeImg">×</div>
       </div>
     </div>
@@ -49,7 +49,6 @@ import firebase from "firebase"
 export default {
   data() {
     return {
-      selectedImage: "",
       selected: "",
       postContents: "",
       seen: false,
@@ -63,7 +62,6 @@ export default {
         selected: this.selected,
         postContents: this.postContents,
         images: this.images,
-        photos: this.images,
       }
       firebase
         .firestore()
@@ -75,12 +73,12 @@ export default {
             ...item,
           })
         })
+        this.$router.push({name:"Home"})
     },
     selectImage: function () {
       this.seen = true
       const file = this.$refs.preview.files[0]
-      this.selectedImage = URL.createObjectURL(file)
-      const Image = { name: URL.createObjectURL(file) }
+      const Image = URL.createObjectURL(file) 
       this.images.push(Image)
     },
     removeImg(index) {
@@ -100,7 +98,7 @@ export default {
       .collection("tweets")
       .get()
       .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
+        snapshot.forEach((doc) => {
           this.tweets.push({
             id: doc.id,
             ...doc.data(),
