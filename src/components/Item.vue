@@ -8,19 +8,15 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
-    <!-- <div v-for="(selected, index) in show.selected"
-    v-bind:key="index">
-      {{show.selected}}
+    <div v-for="(shows, index) in show" :key="index">
+      {{ shows.selected }}
+      {{ shows.postContents }}
     </div>
     <div>
-      {{show[0].postContents[0]}}
-      </div> -->
-     
-      <div>
-        <div v-for="images in show" v-bind:key="images.index" />
-        <img v-bind:src="show.images" style="width: 300px; height: 180px"  alt="no images exist" />
-        {{show.images}} 
-      </div>
+      <div v-for="(images, index) in show" v-bind:key="index" />
+      <img v-bind:src="show.images" style="width: 300px; height: 180px"  alt="no images exist" />
+      {{show.images}}
+    </div>
 
     <div class="content" v-html="whisper.content"></div>
     <button
@@ -44,11 +40,15 @@ export default {
   props: ["id", "uid"],
   data() {
     return {
+      tweets:[],
       whisper: {},
       user: {},
       currentUser: {},
       showBtns: false,
-      show:[],
+      show:[
+        { selected:this.selected },
+        { postContents:this.postContents }
+      ],
     }
   },
   firestore() {
@@ -64,21 +64,21 @@ export default {
         db.collection("whispers").doc(this.$props.id).delete()
       }
     },
-    getItem: async function(){
-    let self =this
+  //   getItem: async function(){
+  //   let self =this
     
-    await firebase
-    .firestore()
-    .collection("tweets")
-    .doc(this.postid)
-    .get()
-      .then(doc => {
-        self.item = {
-          ...doc.data()       
-        }
-        this.getImages(doc.data().show.images)
-      })    
-  },
+  //   await firebase
+  //   .firestore()
+  //   .collection("tweets")
+  //   .doc(this.postid)
+  //   .get()
+  //     .then(doc => {
+  //       self.item = {
+  //         ...doc.data()       
+  //       }
+  //       this.getImages(doc.data().show.images)
+  //     })    
+  // },
   getImages: async function(path){
     let self =this
 
@@ -97,8 +97,7 @@ export default {
   },
   },
   mounted: function () {
-
-        const storage = firebase.storage();
+    const storage = firebase.storage();
     const pathReference = storage.ref();
     let self = this;
     console.log(pathReference)

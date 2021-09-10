@@ -51,7 +51,6 @@ export default {
     return {
       selected: "",
       postContents: "",
-      imagePath:"",
       seen: false,
       images: [],
       tweets: [],
@@ -60,20 +59,17 @@ export default {
   methods: {
     post() {
 
-      const imagePathMaterial=this.images
-
       const item = {
         selected: this.selected,
         postContents: this.postContents,
         images: this.images,
-        imagePath: imagePathMaterial,
       }
       firebase
         .firestore()
         .collection("tweets")
         .add(item)
         .then((ref) => {
-            this.saveImage(imagePathMaterial)
+            this.saveImage()
           this.tweets.push({
             id: ref.id,
             ...item,
@@ -101,7 +97,7 @@ export default {
         .storage()
         .ref()
         .child(path)
-        .put(this.file).then(function() {
+        .put(this.images).then(function() {
           console.log('Uploaded a blob or file!');
         });
     },
