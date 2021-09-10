@@ -8,15 +8,12 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
-    <!-- <div>
+    <div>
       {{show[0].selected[0]}}
     </div>
     <div>
       {{show[0].postContents[0]}}
       </div>
-      <div>
-      {{show[0].images[0]}}
-      </div>  -->
       <div>
         <div v-for="images in show" v-bind:key="images.index" />
         <img v-bind:src="show[0].images[0]" alt="no images exist" />
