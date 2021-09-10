@@ -8,24 +8,19 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
-    <!-- <div>
-      {{item.selected}}
+    <div>
+      {{show[0].selected}}
     </div>
     <div>
-      {{item.postContents}}
+      {{show[0].postContents}}
       </div>
-      <div>
-      {{item.images}} -->
-      <!-- </div> -->
+     
       <div>
         <div v-for="images in show" v-bind:key="images.index" />
-        <img v-bind:src="show[0].images[0]" alt="no images exist" />
-        {{show[0].images[0]}}
+        <img v-bind:src="show[0].images[0]" style="width: 300px; height: 180px"  alt="no images exist" />
+        {{show[0].images[0]}} 
       </div>
-      <div>
-        <img v-bind:src="images" alt="no images exist" />
-        {{images}}
-      </div>
+
     <div class="content" v-html="whisper.content"></div>
     <button
       v-if="currentUser && currentUser.uid == user.id"
@@ -48,12 +43,12 @@ export default {
   props: ["id", "uid"],
   data() {
     return {
- 
       whisper: {},
       user: {},
       currentUser: {},
       showBtns: false,
       show:[],
+
     }
   },
   firestore() {
@@ -78,6 +73,7 @@ export default {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           this.show.push({
+            // id: this.show.length,
             id: doc.id,
             ...doc.data(),
           })

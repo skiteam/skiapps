@@ -90,6 +90,15 @@ export default {
         this.seen = false
       }
     },
+    saveImage:function(){
+      firebase
+      .storage()
+      .ref()
+      .child()
+      .put(this.file).then(function(){
+        console.log("upload")
+      })
+    }
   },
 
   created: function () {
