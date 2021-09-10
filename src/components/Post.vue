@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     post() {
+
       const item = {
         selected: this.selected,
         postContents: this.postContents,
@@ -68,12 +69,13 @@ export default {
         .collection("tweets")
         .add(item)
         .then((ref) => {
+            this.saveImage()
           this.tweets.push({
             id: ref.id,
             ...item,
           })
         })
-        this.$router.push({name:"Home"})
+      this.$router.push({ name: "Home" })
     },
     selectImage: function () {
       this.seen = true
@@ -90,18 +92,17 @@ export default {
         this.seen = false
       }
     },
-    saveImage:function(){
+    saveImage:function(path){
       firebase
-      .storage()
-      .ref()
-      .child()
-      .put(this.file).then(function(){
-        console.log("upload")
-      })
-    }
+        .storage()
+        .ref()
+        .child(path)
+        .put(this.images).then(function() {
+          console.log('Uploaded a blob or file!');
+        });
+    },
   },
-
-  created: function () {
+  mounted: function () {
     firebase
       .firestore()
       .collection("tweets")

@@ -8,19 +8,15 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
-    <div v-for="(shows,index) in show" :key="index">
-      {{shows.selected}}
-      {{shows.postContents}}
+    <div v-for="(shows, index) in show" :key="index">
+      {{ shows.selected }}
+      {{ shows.postContents }}
     </div>
-    <!-- <div>
-      {{show[0].postContents}}
-      </div> -->
-     
-      <!-- <div>
-        <div v-for="images in show" v-bind:key="images.index" />
-        <img v-bind:src="show[0].images[0]" style="width: 300px; height: 180px"  alt="no images exist" />
-        {{show[0].images[0]}} 
-      </div> -->
+    <div>
+      <div v-for="(images, index) in show" v-bind:key="index" />
+      <img v-bind:src="show.images" style="width: 300px; height: 180px"  alt="no images exist" />
+      {{show.images}}
+    </div>
 
     <div class="content" v-html="whisper.content"></div>
     <button
@@ -50,10 +46,9 @@ export default {
       currentUser: {},
       showBtns: false,
       show:[
-        {selected:this.selected},
-        {postContents:this.postContents}
+        { selected:this.selected },
+        { postContents:this.postContents }
       ],
-
     }
   },
   firestore() {
@@ -69,8 +64,44 @@ export default {
         db.collection("whispers").doc(this.$props.id).delete()
       }
     },
+  //   getItem: async function(){
+  //   let self =this
+    
+  //   await firebase
+  //   .firestore()
+  //   .collection("tweets")
+  //   .doc(this.postid)
+  //   .get()
+  //     .then(doc => {
+  //       self.item = {
+  //         ...doc.data()       
+  //       }
+  //       this.getImages(doc.data().show.images)
+  //     })    
+  // },
+  getImages: async function(path){
+    let self =this
+
+    await firebase
+      .storage()
+      .ref()
+      .child(path)
+      .getDownloadURL()
+      .then(function(url) {
+        self.show.images = url;
+        console.log(url);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
-  created: function () {
+  },
+  mounted: function () {
+    const storage = firebase.storage();
+    const pathReference = storage.ref();
+    let self = this;
+    console.log(pathReference)
+
     firebase
       .firestore()
       .collection("tweets")
@@ -83,8 +114,17 @@ export default {
             ...doc.data(),
           })
         })
+      pathReference.child(this.item.imagePath)
+    .getDownloadURL()
+    .then(function(url){
+          self.imagePath = url;
+          console.log(url);})
+    .catch(function(error) {
+      console.log(error)
+
+});
       })
-       auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       this.currentUser = user
     })
   },
