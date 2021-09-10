@@ -32,8 +32,8 @@
       <div class="picture" v-if="seen">
         <div v-for="(image, index) in images" v-bind:key="index">
           <!-- {{ index }}:{{ image }} -->
-        <img :src="image" alt="選択された画像" class="image" />
-        </div>
+        <img :src="image" alt="選択された画像" style="width: 300px; height: 180px" class="image" />
+         </div>
         <div v-on:click="removeImg">×</div>
       </div>
     </div>
@@ -51,6 +51,7 @@ export default {
     return {
       selected: "",
       postContents: "",
+      imagePath:"",
       seen: false,
       images: [],
       tweets: [],
@@ -58,16 +59,21 @@ export default {
   },
   methods: {
     post() {
+
+      const imagePathMaterial=this.images
+
       const item = {
         selected: this.selected,
         postContents: this.postContents,
         images: this.images,
+        imagePath: imagePathMaterial,
       }
       firebase
         .firestore()
         .collection("tweets")
         .add(item)
         .then((ref) => {
+            this.saveImage(imagePathMaterial)
           this.tweets.push({
             id: ref.id,
             ...item,
@@ -90,9 +96,17 @@ export default {
         this.seen = false
       }
     },
+    saveImage:function(path){
+      firebase
+        .storage()
+        .ref()
+        .child(path)
+        .put(this.file).then(function() {
+          console.log('Uploaded a blob or file!');
+        });
+    },
   },
-
-  created: function () {
+  mounted: function () {
     firebase
       .firestore()
       .collection("tweets")

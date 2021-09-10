@@ -8,18 +8,20 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
-    <div v-for="(selected, index) in show.selected"
+    <!-- <div v-for="(selected, index) in show.selected"
     v-bind:key="index">
       {{show.selected}}
     </div>
-    <!-- <div>
+    <div>
       {{show[0].postContents[0]}}
-      </div>
+      </div> -->
+     
       <div>
         <div v-for="images in show" v-bind:key="images.index" />
-        <img v-bind:src="show[0].images[0]" alt="no images exist" />
-        {{show[0].images[0]}}
-      </div> -->
+        <img v-bind:src="show.images" style="width: 300px; height: 180px"  alt="no images exist" />
+        {{show.images}} 
+      </div>
+
     <div class="content" v-html="whisper.content"></div>
     <button
       v-if="currentUser && currentUser.uid == user.id"
@@ -42,7 +44,6 @@ export default {
   props: ["id", "uid"],
   data() {
     return {
- 
       whisper: {},
       user: {},
       currentUser: {},
@@ -63,8 +64,45 @@ export default {
         db.collection("whispers").doc(this.$props.id).delete()
       }
     },
+    getItem: async function(){
+    let self =this
+    
+    await firebase
+    .firestore()
+    .collection("tweets")
+    .doc(this.postid)
+    .get()
+      .then(doc => {
+        self.item = {
+          ...doc.data()       
+        }
+        this.getImages(doc.data().show.images)
+      })    
   },
-  created: function () {
+  getImages: async function(path){
+    let self =this
+
+    await firebase
+      .storage()
+      .ref()
+      .child(path)
+      .getDownloadURL()
+      .then(function(url) {
+        self.show.images = url;
+        console.log(url);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  },
+  },
+  mounted: function () {
+
+        const storage = firebase.storage();
+    const pathReference = storage.ref();
+    let self = this;
+    console.log(pathReference)
+
     firebase
       .firestore()
       .collection("tweets")
@@ -72,10 +110,20 @@ export default {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           this.show.push({
+            // id: this.show.length,
             id: doc.id,
             ...doc.data(),
           })
         })
+      pathReference.child(this.item.imagePath)
+    .getDownloadURL()
+    .then(function(url){
+          self.imagePath = url;
+          console.log(url);})
+    .catch(function(error) {
+      console.log(error)
+
+});
       })
     auth.onAuthStateChanged((user) => {
       this.currentUser = user
