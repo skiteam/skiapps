@@ -12,10 +12,6 @@
       {{shows.selected}}
       {{shows.postContents}}
     </div>
-    <!-- <div>
-      {{show[0].postContents}}
-      </div> -->
-     
       <!-- <div>
         <div v-for="images in show" v-bind:key="images.index" />
         <img v-bind:src="show[0].images[0]" style="width: 300px; height: 180px"  alt="no images exist" />
@@ -44,14 +40,13 @@ export default {
   props: ["id", "uid"],
   data() {
     return {
-      tweets:[],
       whisper: {},
       user: {},
       currentUser: {},
       showBtns: false,
       show:[
         {selected:this.selected},
-        {postContents:this.postContents}
+        {postContents:this.postContents},
       ],
 
     }
