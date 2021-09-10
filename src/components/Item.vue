@@ -8,6 +8,20 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
+    <!-- <div>
+      {{show[0].selected[0]}}
+    </div>
+    <div>
+      {{show[0].postContents[0]}}
+      </div>
+      <div>
+      {{show[0].images[0]}}
+      </div>  -->
+      <div>
+        <div v-for="images in show" v-bind:key="images.index" />
+        <img v-bind:src="show[0].images[0]" alt="no images exist" />
+        {{show[0].images[0]}}
+      </div>
     <div class="content" v-html="whisper.content"></div>
     <button
       v-if="currentUser && currentUser.uid == user.id"
@@ -24,26 +38,25 @@
 <script>
 import { db } from "@/firebase.js"
 import { auth } from "@/firebase.js"
+import firebase from "firebase"
 
 export default {
   props: ["id", "uid"],
   data() {
     return {
+ 
       whisper: {},
       user: {},
       currentUser: {},
       showBtns: false,
+      show:[],
     }
-  },
-  created() {
-    auth.onAuthStateChanged((user) => {
-      this.currentUser = user
-    })
   },
   firestore() {
     return {
       whisper: db.collection("whispers").doc(this.$props.id),
       user: db.collection("users").doc(this.$props.uid),
+      tweets:db.collection('tweets').where('selected','==','this.selected')
     }
   },
   methods: {
@@ -53,7 +66,25 @@ export default {
       }
     },
   },
+  created: function () {
+    firebase
+      .firestore()
+      .collection("tweets")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          this.show.push({
+            id: doc.id,
+            ...doc.data(),
+          })
+        })
+      })
+    auth.onAuthStateChanged((user) => {
+      this.currentUser = user
+    })
+  },
 }
+
 </script>
 
 <style lang="stylus">
