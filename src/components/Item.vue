@@ -8,18 +8,19 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
-    <div>
-      {{show[0].selected}}
+    <div v-for="(shows,index) in show" :key="index">
+      {{shows.selected}}
+      {{shows.postContents}}
     </div>
-    <div>
+    <!-- <div>
       {{show[0].postContents}}
-      </div>
+      </div> -->
      
-      <div>
+      <!-- <div>
         <div v-for="images in show" v-bind:key="images.index" />
         <img v-bind:src="show[0].images[0]" style="width: 300px; height: 180px"  alt="no images exist" />
         {{show[0].images[0]}} 
-      </div>
+      </div> -->
 
     <div class="content" v-html="whisper.content"></div>
     <button
@@ -43,11 +44,15 @@ export default {
   props: ["id", "uid"],
   data() {
     return {
+      tweets:[],
       whisper: {},
       user: {},
       currentUser: {},
       showBtns: false,
-      show:[],
+      show:[
+        {selected:this.selected},
+        {postContents:this.postContents}
+      ],
 
     }
   },
