@@ -8,17 +8,18 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
-    <div>
-      {{show[0].selected[0]}}
+    <div v-for="(selected, index) in show.selected"
+    v-bind:key="index">
+      {{show.selected}}
     </div>
-    <div>
+    <!-- <div>
       {{show[0].postContents[0]}}
       </div>
       <div>
         <div v-for="images in show" v-bind:key="images.index" />
         <img v-bind:src="show[0].images[0]" alt="no images exist" />
         {{show[0].images[0]}}
-      </div>
+      </div> -->
     <div class="content" v-html="whisper.content"></div>
     <button
       v-if="currentUser && currentUser.uid == user.id"
