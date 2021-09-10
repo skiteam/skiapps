@@ -32,7 +32,7 @@
       <div class="picture" v-if="seen">
         <div v-for="(image, index) in images" v-bind:key="index">
           <!-- {{ index }}:{{ image }} -->
-        <img :src="image" alt="選択された画像" class="image" />
+        <img :src="image" alt="選択された画像" style="width: 300px; height: 180px" class="image" />
          </div>
         <div v-on:click="removeImg">×</div>
       </div>

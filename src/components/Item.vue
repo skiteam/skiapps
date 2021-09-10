@@ -18,6 +18,11 @@
       {{item.images}} -->
       <!-- </div> -->
       <div>
+        <div v-for="images in show" v-bind:key="images.index" />
+        <img v-bind:src="show[0].images[0]" alt="no images exist" />
+        {{show[0].images[0]}}
+      </div>
+      <div>
         <img v-bind:src="images" alt="no images exist" />
         {{images}}
       </div>
@@ -48,7 +53,7 @@ export default {
       user: {},
       currentUser: {},
       showBtns: false,
-      images:[],
+      show:[],
     }
   },
   firestore() {
@@ -72,7 +77,7 @@ export default {
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
-          this.images.push({
+          this.show.push({
             id: doc.id,
             ...doc.data(),
           })
