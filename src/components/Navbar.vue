@@ -4,6 +4,7 @@
   </div>
 </template>
 
+
 <style>
 .nav__bar {
   height: 30px;

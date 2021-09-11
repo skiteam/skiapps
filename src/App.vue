@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <Header />
-     <router-link to="/post">投稿</router-link>
+    <router-link to="/post">投稿</router-link>
     <Navbar />
     <Item />
-      <router-view />
+    <router-view />
   </div>
 </template>
 
@@ -17,8 +17,7 @@ export default {
   components: {
     Header,
     Navbar,
-    Item
-    
+    Item,
   },
 }
 </script>
