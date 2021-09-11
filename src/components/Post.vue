@@ -2,11 +2,11 @@
   <div class="container">
     <select v-model="selected">
       <option disabled value="">Please select one</option>
-      <option>#ビール</option>
-      <option>#おつまみ</option>
-      <option>#どっちも</option>
+      <option>beer</option>
+      <option>chips</option>
+      <option>both</option>
     </select>
-    <p>
+    <p class="apearingWords">
       <span>{{ selected }}</span>
     </p>
 
@@ -16,29 +16,34 @@
         rows="5"
         maxlength="1000"
         v-model="postContents"
-        placeholder="書いてみよう！"
+        placeholder="Write here！"
       />
       <p>
-        <input
-          type="file"
-          ref="preview"
-          v-on:change="selectImage"
-          name="file"
-          accept="image/jpeg, image/png"
-          multiple
-        />
+        <label class="selectFiles">
+          <input
+            type="file"
+            ref="preview"
+            v-on:change="selectImage"
+            class="selectPictures"
+            name="file"
+            accept="image/jpeg, image/png"
+            multiple
+          />
+          Select files
+        </label>
       </p>
 
       <div class="picture" v-if="seen">
         <!-- <div v-for="(image, index) in images" v-bind:key="index"> -->
           <!-- {{ index }}:{{ image }} -->
+
         <img :src="url" alt="選択された画像" style="width: 300px; height: 180px" class="image" />
-         <!-- </div> -->
+   
         <div v-on:click="removeImg">×</div>
       </div>
     </div>
-    <div>
-      <input type="submit" v-on:click="post" class="posting" value="投稿" />
+    <div class="postingButton">
+      <input type="submit" v-on:click="post" class="posting" value="Post!" />
     </div>
   </div>
 </template>
@@ -107,6 +112,7 @@ export default {
           })
         })
       this.$router.push({ name: "Home" })
+
       }else{
         alert("ログインしてください！")
       }
@@ -114,13 +120,9 @@ export default {
     selectImage: function (e) {
       this.seen = true
       this.url = URL.createObjectURL(this.$refs.preview.files[0])
-        // const imageFile=e.target.files[0]
-        // this.saveImage.push(imageFile[0])
-        
         this.saveImage=e.target.files[0]
         console.log(this.saveImage)
     
-      
     },
     removeImg(index) {
       if (this.$refs.preview && this.$refs.preview.value !== undefined) {
@@ -155,4 +157,41 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.container {
+  margin: 30px;
+}
+.format {
+}
+
+select {
+  background: #bae8e8;
+
+  width: 200px;
+  height: 20px;
+
+  margin: 50px 0px;
+}
+.apearingWords {
+  margin: 14px 0px;
+}
+textarea {
+  background: #bae8e8;
+
+  resize: none;
+  width: 500px;
+  height: 100px;
+}
+.selectPictures {
+  display: none;
+}
+.selectFiles {
+  background: #bae8e8;
+}
+.postingButton {
+  margin: 50px;
+}
+.posting {
+  background: #ffd803;
+}
+</style>
