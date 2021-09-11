@@ -49,6 +49,7 @@ import firebase from "firebase"
 export default {
   data() {
     return {
+      saveImage:null,
       selected: "",
       postContents: "",
       seen: false,
@@ -57,8 +58,24 @@ export default {
     }
   },
   methods: {
-    post() {
-
+     post:async function() {
+      if(this.saveImage!==null){
+        const storageRef=firebase.storage().ref()
+        const createdAdd=new Date()
+        const timeStamp=createdAdd.getTime()
+        const fileName=timeStamp+this.saveImage.name
+        const fileRef=storageRef.child("images/"+fileName)
+         await fileRef
+         .put(this.saveImage)
+         .then(()=>fileRef.getDownloadURL())
+          //  .then((photoURL)=>
+          //  console.log(photoURL))
+            .then((photoUrl) => {
+        this.images = photoUrl;
+      })
+      .catch(function(error) {
+          console.log(error)
+      });
       const item = {
         selected: this.selected,
         postContents: this.postContents,
@@ -69,14 +86,14 @@ export default {
         .collection("tweets")
         .add(item)
         .then((ref) => {
-            this.saveImage()
           this.tweets.push({
             id: ref.id,
             ...item,
           })
         })
       this.$router.push({ name: "Home" })
-    },
+    }
+     },
     selectImage: function () {
       this.seen = true
       const file = this.$refs.preview.files[0]
@@ -92,16 +109,6 @@ export default {
         this.seen = false
       }
     },
-    saveImage:function(path){
-      firebase
-        .storage()
-        .ref()
-        .child(path)
-        .put(this.images).then(function() {
-          console.log('Uploaded a blob or file!');
-        });
-    },
-  },
   mounted: function () {
     firebase
       .firestore()
@@ -116,6 +123,7 @@ export default {
         })
       })
   },
+}
 }
 </script>
 

@@ -40,7 +40,6 @@ export default {
   props: ["id", "uid"],
   data() {
     return {
-      tweets:[],
       whisper: {},
       user: {},
       currentUser: {},
@@ -64,44 +63,8 @@ export default {
         db.collection("whispers").doc(this.$props.id).delete()
       }
     },
-  //   getItem: async function(){
-  //   let self =this
-    
-  //   await firebase
-  //   .firestore()
-  //   .collection("tweets")
-  //   .doc(this.postid)
-  //   .get()
-  //     .then(doc => {
-  //       self.item = {
-  //         ...doc.data()       
-  //       }
-  //       this.getImages(doc.data().show.images)
-  //     })    
-  // },
-  getImages: async function(path){
-    let self =this
-
-    await firebase
-      .storage()
-      .ref()
-      .child(path)
-      .getDownloadURL()
-      .then(function(url) {
-        self.show.images = url;
-        console.log(url);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  },
   },
   mounted: function () {
-    const storage = firebase.storage();
-    const pathReference = storage.ref();
-    let self = this;
-    console.log(pathReference)
-
     firebase
       .firestore()
       .collection("tweets")
@@ -114,15 +77,6 @@ export default {
             ...doc.data(),
           })
         })
-      pathReference.child(this.item.imagePath)
-    .getDownloadURL()
-    .then(function(url){
-          self.imagePath = url;
-          console.log(url);})
-    .catch(function(error) {
-      console.log(error)
-
-});
       })
     auth.onAuthStateChanged((user) => {
       this.currentUser = user
