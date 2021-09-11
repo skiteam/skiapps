@@ -8,15 +8,15 @@
 
       <p class="user-name">{{ user.name }}</p>
     </div>
-    <div v-for="(shows,index) in show" :key="index">
-      {{shows.selected}}
-      {{shows.postContents}}
+    <div v-for="(shows, index) in show" :key="index">
+      {{ shows.selected }}
+      {{ shows.postContents }}
     </div>
-      <!-- <div>
-        <div v-for="images in show" v-bind:key="images.index" />
-        <img v-bind:src="show[0].images[0]" style="width: 300px; height: 180px"  alt="no images exist" />
-        {{show[0].images[0]}} 
-      </div> -->
+    <div>
+      <div v-for="(images, index) in show" v-bind:key="index" />
+      <img v-bind:src="show.images" style="width: 300px; height: 180px"  alt="no images exist" />
+      {{show.images}}
+    </div>
 
     <div class="content" v-html="whisper.content"></div>
     <button
@@ -45,10 +45,9 @@ export default {
       currentUser: {},
       showBtns: false,
       show:[
-        {selected:this.selected},
-        {postContents:this.postContents},
+        { selected:this.selected },
+        { postContents:this.postContents }
       ],
-
     }
   },
   firestore() {
@@ -65,7 +64,7 @@ export default {
       }
     },
   },
-  created: function () {
+  mounted: function () {
     firebase
       .firestore()
       .collection("tweets")
@@ -79,7 +78,7 @@ export default {
           })
         })
       })
-       auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       this.currentUser = user
     })
   },

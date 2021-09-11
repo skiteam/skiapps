@@ -49,6 +49,7 @@ import firebase from "firebase"
 export default {
   data() {
     return {
+      saveImage:null,
       selected: "",
       postContents: "",
       seen: false,
@@ -57,7 +58,24 @@ export default {
     }
   },
   methods: {
-    post() {
+     post:async function() {
+      if(this.saveImage!==null){
+        const storageRef=firebase.storage().ref()
+        const createdAdd=new Date()
+        const timeStamp=createdAdd.getTime()
+        const fileName=timeStamp+this.saveImage.name
+        const fileRef=storageRef.child("images/"+fileName)
+         await fileRef
+         .put(this.saveImage)
+         .then(()=>fileRef.getDownloadURL())
+          //  .then((photoURL)=>
+          //  console.log(photoURL))
+            .then((photoUrl) => {
+        this.images = photoUrl;
+      })
+      .catch(function(error) {
+          console.log(error)
+      });
       const item = {
         selected: this.selected,
         postContents: this.postContents,
@@ -73,8 +91,9 @@ export default {
             ...item,
           })
         })
-        this.$router.push({name:"Home"})
-    },
+      this.$router.push({ name: "Home" })
+    }
+     },
     selectImage: function () {
       this.seen = true
       const file = this.$refs.preview.files[0]
@@ -90,18 +109,7 @@ export default {
         this.seen = false
       }
     },
-    saveImage:function(){
-      firebase
-      .storage()
-      .ref()
-      .child()
-      .put(this.file).then(function(){
-        console.log("upload")
-      })
-    }
-  },
-
-  created: function () {
+  mounted: function () {
     firebase
       .firestore()
       .collection("tweets")
@@ -115,6 +123,7 @@ export default {
         })
       })
   },
+}
 }
 </script>
 
