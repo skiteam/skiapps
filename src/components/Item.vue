@@ -1,23 +1,22 @@
 <template>
+<div>
   <li class="item">
     <div class="user-box">
       <div
         class="avatar"
         :style="'background-image: url(' + user.photoURL + ')'"
       ></div>
-
       <p class="user-name">{{ user.name }}</p>
     </div>
+    
     <div v-for="(shows, index) in show" :key="index">
       {{ shows.selected }}
       {{ shows.postContents }}
+      <div v-if="shows.images">
+       <img v-bind:src="shows.images" style="width: 300px; height: 180px" />
+      </div>
     </div>
-    <div>
-      <div v-for="(images, index) in show" v-bind:key="index" />
-      <img v-bind:src="show.images" style="width: 300px; height: 180px"  alt="no images exist" />
-      {{show.images}}
-    </div>
-
+     
     <div class="content" v-html="whisper.content"></div>
     <button
       v-if="currentUser && currentUser.uid == user.id"
@@ -29,6 +28,7 @@
       <li @click="deleteWhisper" style="color: red">delete</li>
     </div>
   </li>
+</div>
 </template>
 
 <script>
@@ -72,7 +72,6 @@ export default {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           this.show.push({
-            // id: this.show.length,
             id: doc.id,
             ...doc.data(),
           })

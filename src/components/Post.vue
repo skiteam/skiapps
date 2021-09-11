@@ -30,10 +30,10 @@
       </p>
 
       <div class="picture" v-if="seen">
-        <div v-for="(image, index) in images" v-bind:key="index">
+        <!-- <div v-for="(image, index) in images" v-bind:key="index"> -->
           <!-- {{ index }}:{{ image }} -->
-        <img :src="image" alt="選択された画像" style="width: 300px; height: 180px" class="image" />
-         </div>
+        <img :src="url" alt="選択された画像" style="width: 300px; height: 180px" class="image" />
+         <!-- </div> -->
         <div v-on:click="removeImg">×</div>
       </div>
     </div>
@@ -53,12 +53,16 @@ export default {
       selected: "",
       postContents: "",
       seen: false,
-      images: [],
+      images: null,
       tweets: [],
+      url:"",
+      item:null,
+      uid:null,
     }
   },
   methods: {
      post:async function() {
+      if(this.uid!==null){
       if(this.saveImage!==null){
         const storageRef=firebase.storage().ref()
         const createdAdd=new Date()
@@ -71,34 +75,52 @@ export default {
           //  .then((photoURL)=>
           //  console.log(photoURL))
             .then((photoUrl) => {
-        this.images = photoUrl;
+        this.images=photoUrl;
       })
       .catch(function(error) {
           console.log(error)
       });
-      const item = {
+      }
+      if(this.saveImage!==null){
+       this.item = {
+        id:this.uid,
         selected: this.selected,
         postContents: this.postContents,
         images: this.images,
+        // photoUrl:this.photoUrl
+      }
+      }else{
+        this.item={
+         id:this.uid,
+         selected: this.selected,
+         postContents: this.postContents,
+        }
       }
       firebase
         .firestore()
         .collection("tweets")
-        .add(item)
+        .add(this.item)
         .then((ref) => {
           this.tweets.push({
             id: ref.id,
-            ...item,
+            ...this.item,
           })
         })
       this.$router.push({ name: "Home" })
-    }
-     },
-    selectImage: function () {
+      }else{
+        alert("ログインしてください！")
+      }
+    },
+    selectImage: function (e) {
       this.seen = true
-      const file = this.$refs.preview.files[0]
-      const Image = URL.createObjectURL(file) 
-      this.images.push(Image)
+      this.url = URL.createObjectURL(this.$refs.preview.files[0])
+        // const imageFile=e.target.files[0]
+        // this.saveImage.push(imageFile[0])
+        
+        this.saveImage=e.target.files[0]
+        console.log(this.saveImage)
+    
+      
     },
     removeImg(index) {
       if (this.$refs.preview && this.$refs.preview.value !== undefined) {
@@ -108,7 +130,8 @@ export default {
       if (this.images[0] == undefined) {
         this.seen = false
       }
-    },
+    }
+  },
   mounted: function () {
     firebase
       .firestore()
@@ -123,7 +146,12 @@ export default {
         })
       })
   },
-}
+  created(){
+     firebase.auth().onAuthStateChanged((user) => {
+      this.uid=user.uid
+    })
+  }
+
 }
 </script>
 
