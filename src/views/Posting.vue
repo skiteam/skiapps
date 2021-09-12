@@ -9,3 +9,10 @@ export default {
   components: { Post },
 }
 </script>
+<style scoped>
+.page{
+  background-color: grey;
+  height: 611px;
+  
+}
+</style>

@@ -4,51 +4,51 @@
       {{ this.date }}
       {{ this.time }}
     </div>
-    <select v-model="selected">
-      <option disabled value="">Please select one</option>
-      <option>#Beer</option>
-      <option>#Chips</option>
-      <option>#Both</option>
-    </select>
-    <p class="apearingWords">
-      <span>{{ selected }}</span>
-    </p>
-
-    <div class="format">
-      <textarea
+    <div class="box1">
+      <select class="tag" v-model="selected">
+       <option disabled value="">Please select #</option>
+       <option>#Beer</option>
+       <option>#Chips</option>
+       <option>#Both</option>
+      </select>
+      <div class="format">
+       <textarea
         type="text"
         rows="5"
         maxlength="1000"
         v-model="postContents"
-        placeholder="Write here！"
-      />
-      <p>
-        <label class="selectFiles">
-          <input
-            type="file"
-            ref="preview"
-            v-on:change="selectImage"
-            class="selectPictures"
-            name="file"
-            accept="image/jpeg, image/png"
-            multiple
-          />
-          Select files
+        placeholder="Write text here！"
+        style="white-space:pre-wrap;"
+       />
+       <p>
+       <label class="selectFiles">
+        <input
+          type="file"
+          ref="preview"
+          v-on:change="selectImage"
+          class="selectPictures"
+          name="file"
+          accept="image/jpeg, image/png"
+          multiple
+         />
+          +Photo
         </label>
-      </p>
-
+       </p>
+      </div>
+    </div>
+    <div>
       <div class="picture" v-if="seen">
         <img
           :src="url"
           alt="選択された画像"
-          style="width: 300px; height: 180px"
+          style="width: 500px; height: 280px"
           class="image"
         />
-        <div v-on:click="removeImg">×</div>
+        <div  class="remove" v-on:click="removeImg">×</div>
       </div>
     </div>
     <div class="postingButton">
-      <input type="submit" v-on:click="post" class="posting" value="Post!" />
+      <input type="submit" v-on:click="post" class="posting" value="Post" />
     </div>
   </div>
 </template>
@@ -86,8 +86,6 @@ export default {
           await fileRef
             .put(this.saveImage)
             .then(() => fileRef.getDownloadURL())
-            //  .then((photoURL)=>
-            //  console.log(photoURL))
             .then((photoUrl) => {
               this.images = photoUrl
             })
@@ -103,7 +101,6 @@ export default {
             selected: this.selected,
             postContents: this.postContents,
             images: this.images,
-            // photoUrl:this.photoUrl
           }
         } else {
           this.item = {
@@ -135,15 +132,13 @@ export default {
       this.saveImage = e.target.files[0]
       console.log(this.saveImage)
     },
-    removeImg(index) {
-      if (this.$refs.preview && this.$refs.preview.value !== undefined) {
-        this.$refs.preview.value = ""
-        this.images.splice(index, 1)
+    removeImg() {
+      if (this.url !== "") {
+        this.saveImage=null;
+        this.url="";
+        this.seen = false;
       }
-      if (this.images[0] == undefined) {
-        this.seen = false
-      }
-    },
+      },
     updateTime: function () {
       let currentdate = new Date()
       this.time =
@@ -194,8 +189,8 @@ export default {
 
 <style>
 .container {
-  margin: 30px;
-
+  height: 600px;
+  margin: 20px;
   background: rgb(255, 255, 255);
   background: linear-gradient(
     to bottom,
@@ -204,7 +199,22 @@ export default {
     rgba(0, 212, 255, 1) 100%
   );
 }
-.format {
+.time {
+  padding-top:10px;
+  padding-left:1000px;
+  font-size:40px;
+}
+.tag{
+  padding-right:0px;
+  padding-top: 0px;
+  width:350px;
+  height:40px;
+  font-size:20px;
+}
+.box1{
+  padding-top: 0px;
+  float:left;
+  padding-left:100px;
 }
 
 select {
@@ -215,26 +225,43 @@ select {
 
   margin: 50px 0px;
 }
-.apearingWords {
-  margin: 14px 0px;
-}
-textarea {
-  background: rgb(255, 238, 202);
 
+textarea {
+  white-space:pre-wrap;
+  background: rgb(255, 238, 202);
   resize: none;
   width: 500px;
-  height: 100px;
+  height: 200px;
+   font-size:20px;
 }
 .selectPictures {
   display: none;
+  
+}
+.remove{
+  font-size:100px;
 }
 .selectFiles {
-  background: rgb(255, 239, 195);
+  background: rgb(250, 219, 134);
+  font-size:80px;
+  font-weight: bold;
+  
+  
 }
 .postingButton {
+  
   margin: 50px;
 }
 .posting {
+  font-size:30px;
+  position:absolute;	
+	bottom:70px;
+	right:100px;
+  border-radius: 50%;
+  width:150px;
+  height:150px;
   background: #ffd803;
+  font-weight: bold;
+
 }
 </style>
