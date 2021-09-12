@@ -1,10 +1,14 @@
 <template>
   <div class="container">
+    <div class="time">
+      {{this.date}}
+      {{this.time}}
+    </div>
     <select v-model="selected">
       <option disabled value="">Please select one</option>
-      <option>beer</option>
-      <option>chips</option>
-      <option>both</option>
+      <option>#Beer</option>
+      <option>#Chips</option>
+      <option>#Both</option>
     </select>
     <p class="apearingWords">
       <span>{{ selected }}</span>
@@ -34,11 +38,7 @@
       </p>
 
       <div class="picture" v-if="seen">
-        <!-- <div v-for="(image, index) in images" v-bind:key="index"> -->
-          <!-- {{ index }}:{{ image }} -->
-
         <img :src="url" alt="選択された画像" style="width: 300px; height: 180px" class="image" />
-   
         <div v-on:click="removeImg">×</div>
       </div>
     </div>
@@ -63,6 +63,11 @@ export default {
       url:"",
       item:null,
       uid:null,
+      date:"",
+      time:"",
+      week:['(日)','(月)','(火)','(水)','(木)','(金)','(土)',],
+      timerID:null,
+
     }
   },
   methods: {
@@ -88,6 +93,8 @@ export default {
       }
       if(this.saveImage!==null){
        this.item = {
+        date:this.date,
+        time:this.time,
         id:this.uid,
         selected: this.selected,
         postContents: this.postContents,
@@ -96,6 +103,8 @@ export default {
       }
       }else{
         this.item={
+         date:this.date,
+         time:this.time,
          id:this.uid,
          selected: this.selected,
          postContents: this.postContents,
@@ -122,7 +131,6 @@ export default {
       this.url = URL.createObjectURL(this.$refs.preview.files[0])
         this.saveImage=e.target.files[0]
         console.log(this.saveImage)
-    
     },
     removeImg(index) {
       if (this.$refs.preview && this.$refs.preview.value !== undefined) {
@@ -132,6 +140,18 @@ export default {
       if (this.images[0] == undefined) {
         this.seen = false
       }
+    },
+    updateTime: function() { 
+      let currentdate = new Date()
+      this.time = this.zeroPadding(currentdate.getHours(), 2) + ':' + this.zeroPadding(currentdate.getMinutes(), 2) + ':' + this.zeroPadding(currentdate.getSeconds(), 2);
+      this.date = this.zeroPadding(currentdate.getFullYear(), 4) + '年' + this.zeroPadding(currentdate.getMonth() + 1, 2) + '月' + this.zeroPadding(currentdate.getDate(), 2) + '日' + this.week[currentdate.getDay()];
+    },
+  zeroPadding: function(num, len) {
+      let zero = '';
+      for(var i = 0; i < len; i++) {
+        zero += '0';
+     }
+      return (zero + num).slice(-len);
     }
   },
   mounted: function () {
@@ -147,6 +167,7 @@ export default {
           })
         })
       })
+      this.timerID = setInterval(this.updateTime, 1000); 
   },
   created(){
      firebase.auth().onAuthStateChanged((user) => {
