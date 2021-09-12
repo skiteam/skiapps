@@ -8,8 +8,9 @@
       ></div>
       <p class="user-name">{{ user.name }}</p>
     </div>
-    
     <div v-for="(shows, index) in show" :key="index">
+      {{ shows.date }}
+      {{ shows.time }}
       {{ shows.selected }}
       {{ shows.postContents }}
       <div v-if="shows.images">
@@ -44,10 +45,7 @@ export default {
       user: {},
       currentUser: {},
       showBtns: false,
-      show:[
-        { selected:this.selected },
-        { postContents:this.postContents }
-      ],
+      show:[],
     }
   },
   firestore() {
