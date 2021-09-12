@@ -1,35 +1,35 @@
 <template>
-<div>
-  <li class="item">
-    <div class="user-box">
-      <div
-        class="avatar"
-        :style="'background-image: url(' + user.photoURL + ')'"
-      ></div>
-      <p class="user-name">{{ user.name }}</p>
-    </div>
-    <div v-for="(shows, index) in show" :key="index">
-      {{ shows.date }}
-      {{ shows.time }}
-      {{ shows.selected }}
-      {{ shows.postContents }}
-      <div v-if="shows.images">
-       <img v-bind:src="shows.images" style="width: 300px; height: 180px" />
+  <div>
+    <li class="item">
+      <div class="user-box">
+        <div
+          class="avatar"
+          :style="'background-image: url(' + user.photoURL + ')'"
+        ></div>
+        <p class="user-name">{{ user.name }}</p>
       </div>
-    </div>
-     
-    <div class="content" v-html="whisper.content"></div>
-    <button
-      v-if="currentUser && currentUser.uid == user.id"
-      @click="showBtns = !showBtns"
-    >
-      <fa icon="ellipsis-v" />
-    </button>
-    <div v-if="showBtns" class="controls">
-      <li @click="deleteWhisper" style="color: red">delete</li>
-    </div>
-  </li>
-</div>
+      <div v-for="(shows, index) in show" :key="index">
+        {{ shows.date }}
+        {{ shows.time }}
+        {{ shows.selected }}
+        {{ shows.postContents }}
+        <div v-if="shows.images">
+          <img v-bind:src="shows.images" style="width: 300px; height: 180px" />
+        </div>
+      </div>
+
+      <div class="content" v-html="whisper.content"></div>
+      <button
+        v-if="currentUser && currentUser.uid == user.id"
+        @click="showBtns = !showBtns"
+      >
+        <fa icon="ellipsis-v" />
+      </button>
+      <div v-if="showBtns" class="controls">
+        <li @click="deleteWhisper" style="color: red">delete</li>
+      </div>
+    </li>
+  </div>
 </template>
 
 <script>
@@ -45,14 +45,14 @@ export default {
       user: {},
       currentUser: {},
       showBtns: false,
-      show:[],
+      show: [],
     }
   },
   firestore() {
     return {
       whisper: db.collection("whispers").doc(this.$props.id),
       user: db.collection("users").doc(this.$props.uid),
-      tweets:db.collection('tweets').where('selected','==','this.selected')
+      tweets: db.collection("tweets").where("selected", "==", "this.selected"),
     }
   },
   methods: {
@@ -80,7 +80,6 @@ export default {
     })
   },
 }
-
 </script>
 
 <style lang="stylus">
