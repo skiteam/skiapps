@@ -1,23 +1,17 @@
 <template>
   <div id="app">
     <Header />
-    <router-link to="/post">投稿</router-link>
-    <Navbar />
-    <Item />
+
     <router-view />
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header"
-import Navbar from "@/components/Navbar"
-import Item from "@/components/Item"
 
 export default {
   components: {
     Header,
-    Navbar,
-    Item,
   },
 }
 </script>
@@ -51,6 +45,7 @@ body
 :visited
   text-decoration none
   color inherit
+
 main
   margin 80px auto 0
   width 95%

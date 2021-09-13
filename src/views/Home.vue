@@ -1,14 +1,9 @@
 <template>
   <div class="home">
     <div class="list">
-      <Item
-        v-for="whisper in orderBy(whispers, 'date', -1)"
-        :key="whisper.id"
-        :id="whisper.id"
-        :uid="whisper.uid"
-      />
+      <Item />
     </div>
-    <div>
+    <!-- <div>
       <input
         type="submit"
         class="button"
@@ -16,7 +11,7 @@
         value="Sign out"
         v-on:click="signout"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -40,6 +35,7 @@ export default {
   firestore() {
     return {
       whispers: db.collection("whispers"),
+      user: db.collection("users"),
     }
   },
   mixins: [Vue2Filters.mixin],
@@ -57,7 +53,6 @@ export default {
         })
     },
   },
-
 }
 </script>
 <style lang="stylus" scoped>

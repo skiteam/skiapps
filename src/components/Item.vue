@@ -18,7 +18,7 @@
         </div>
       </div>
 
-      <div class="content" v-html="whisper.content"></div>
+      <!-- <div class="content" v-html="whisper.content"></div>
       <button
         v-if="currentUser && currentUser.uid == user.id"
         @click="showBtns = !showBtns"
@@ -27,7 +27,7 @@
       </button>
       <div v-if="showBtns" class="controls">
         <li @click="deleteWhisper" style="color: red">delete</li>
-      </div>
+      </div> -->
     </li>
   </div>
 </template>
@@ -51,17 +51,11 @@ export default {
   firestore() {
     return {
       whisper: db.collection("whispers").doc(this.$props.id),
-      user: db.collection("users").doc(this.$props.uid),
+      user: db.collection("users"),
       tweets: db.collection("tweets").where("selected", "==", "this.selected"),
     }
   },
-  methods: {
-    deleteWhisper() {
-      if (window.confirm("Are You Sure to Delete This Whisper?")) {
-        db.collection("whispers").doc(this.$props.id).delete()
-      }
-    },
-  },
+
   mounted: function () {
     firebase
       .firestore()
@@ -91,6 +85,8 @@ export default {
   flex-wrap no-wrap
   justify-content flex-start
   position relative
+  margin-top 150px
+  margin-left 250px
   .editor
     position relative
     width 100%
