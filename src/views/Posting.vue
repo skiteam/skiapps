@@ -11,8 +11,8 @@ export default {
 </script>
 <style scoped>
 .page{
-  background-color: grey;
-  height: 611px;
+
+  height: 1000px;
   
 }
 </style>

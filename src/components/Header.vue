@@ -1,8 +1,5 @@
 <template>
   <header>
-    <router-link to="/">
-      <h1>Beer & Chips</h1>
-    </router-link>
     <div v-if="currentUser" class="btns">
       <router-link to="/post">
         <button class="pen">✎</button>
@@ -70,16 +67,13 @@ export default {
 </script>
 <style lang="stylus" scoped>
 header
+  
   position fixed
   top 0
   width 100%
   text-align center
   padding 10px
-  h1
-    width fit-content
-    margin 0 auto
-    font-size 3.2rem
-    font-family cursive
+
   .btns
     position absolute
     top 10px
