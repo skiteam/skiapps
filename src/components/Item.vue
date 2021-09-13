@@ -91,6 +91,8 @@ export default {
   flex-wrap no-wrap
   justify-content flex-start
   position relative
+  margin-top 150px
+  margin-left 250px
   .editor
     position relative
     width 100%

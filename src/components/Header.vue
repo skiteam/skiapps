@@ -1,14 +1,17 @@
 <template>
   <header>
     <router-link to="/">
-      <!-- <h1>Beer & Appetizers</h1> -->
+      <h1>Beer & Chips</h1>
     </router-link>
     <div v-if="currentUser" class="btns">
-      <router-link :to="'/user/' + currentUser.uid">
-        <button
-          :style="'background-image: url(' + currentUser.photoURL + ')'"
-        ></button>
+      <router-link to="/post">
+        <button class="pen">✎</button>
       </router-link>
+
+      <button
+        :style="'background-image: url(' + currentUser.photoURL + ')'"
+      ></button>
+
       <button>
         <fa icon="sign-out-alt" @click="signOut" />
       </button>
@@ -40,7 +43,6 @@ export default {
     signIn() {
       const provider = new firebase.auth.GoogleAuthProvider()
       auth.signInWithPopup(provider).then((result) => {
-        this.$router.push("/user/" + result.user.uid)
         alert("こんにちは " + result.user.displayName + "さん!")
         this.createUser(result.user)
       })
@@ -76,7 +78,7 @@ header
   h1
     width fit-content
     margin 0 auto
-    font-size 1.4rem
+    font-size 3.2rem
     font-family cursive
   .btns
     position absolute
@@ -85,4 +87,6 @@ header
     cursor pointer
     img
       width 100%
+  .pen
+   font-size 28px
 </style>

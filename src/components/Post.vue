@@ -6,34 +6,34 @@
     </div>
     <div class="box1">
       <select class="tag" v-model="selected">
-       <option disabled value="">Please select #</option>
-       <option>#Beer</option>
-       <option>#Chips</option>
-       <option>#Both</option>
+        <option disabled value="">Please select #</option>
+        <option>#Beer</option>
+        <option>#Chips</option>
+        <option>#Both</option>
       </select>
       <div class="format">
-       <textarea
-        type="text"
-        rows="5"
-        maxlength="1000"
-        v-model="postContents"
-        placeholder="Write text here！"
-        style="white-space:pre-wrap;"
-       />
-       <p>
-       <label class="selectFiles">
-        <input
-          type="file"
-          ref="preview"
-          v-on:change="selectImage"
-          class="selectPictures"
-          name="file"
-          accept="image/jpeg, image/png"
-          multiple
-         />
-          +Photo
-        </label>
-       </p>
+        <textarea
+          type="text"
+          rows="5"
+          maxlength="1000"
+          v-model="postContents"
+          placeholder="Write text here！"
+          style="white-space: pre-wrap"
+        />
+        <p>
+          <label class="selectFiles">
+            <input
+              type="file"
+              ref="preview"
+              v-on:change="selectImage"
+              class="selectPictures"
+              name="file"
+              accept="image/jpeg, image/png"
+              multiple
+            />
+            +Photo
+          </label>
+        </p>
       </div>
     </div>
     <div>
@@ -44,7 +44,7 @@
           style="width: 500px; height: 280px"
           class="image"
         />
-        <div  class="remove" v-on:click="removeImg">×</div>
+        <div class="remove" v-on:click="removeImg">×</div>
       </div>
     </div>
     <div class="postingButton">
@@ -134,11 +134,11 @@ export default {
     },
     removeImg() {
       if (this.url !== "") {
-        this.saveImage=null;
-        this.url="";
-        this.seen = false;
+        this.saveImage = null
+        this.url = ""
+        this.seen = false
       }
-      },
+    },
     updateTime: function () {
       let currentdate = new Date()
       this.time =
@@ -191,6 +191,7 @@ export default {
 .container {
   height: 600px;
   margin: 20px;
+  padding-top: 50px;
   background: rgb(255, 255, 255);
   background: linear-gradient(
     to bottom,
@@ -198,23 +199,24 @@ export default {
     rgba(255, 201, 59, 1) 100%,
     rgba(0, 212, 255, 1) 100%
   );
+  height: 100vh;
 }
 .time {
-  padding-top:10px;
-  padding-left:1000px;
-  font-size:40px;
+  padding-top: 10px;
+  padding-left: 1000px;
+  font-size: 40px;
 }
-.tag{
-  padding-right:0px;
+.tag {
+  padding-right: 0px;
   padding-top: 0px;
-  width:350px;
-  height:40px;
-  font-size:20px;
+  width: 350px;
+  height: 40px;
+  font-size: 20px;
 }
-.box1{
+.box1 {
   padding-top: 0px;
-  float:left;
-  padding-left:100px;
+  float: left;
+  padding-left: 100px;
 }
 
 select {
@@ -227,41 +229,36 @@ select {
 }
 
 textarea {
-  white-space:pre-wrap;
+  white-space: pre-wrap;
   background: rgb(255, 238, 202);
   resize: none;
   width: 500px;
   height: 200px;
-   font-size:20px;
+  font-size: 20px;
 }
 .selectPictures {
   display: none;
-  
 }
-.remove{
-  font-size:100px;
+.remove {
+  font-size: 100px;
 }
 .selectFiles {
   background: rgb(250, 219, 134);
-  font-size:80px;
+  font-size: 80px;
   font-weight: bold;
-  
-  
 }
 .postingButton {
-  
   margin: 50px;
 }
 .posting {
-  font-size:30px;
-  position:absolute;	
-	bottom:70px;
-	right:100px;
+  font-size: 30px;
+  position: absolute;
+  bottom: 70px;
+  right: 100px;
   border-radius: 50%;
-  width:150px;
-  height:150px;
+  width: 150px;
+  height: 150px;
   background: #ffd803;
   font-weight: bold;
-
 }
 </style>
