@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="itemContainer">
+    <router-link to="/">
+      <h1>Beer & Chips</h1>
+    </router-link>
     <li class="item">
       <div class="user-box">
         <div
@@ -8,26 +11,28 @@
         ></div>
         <p class="user-name">{{ user.name }}</p>
       </div>
-      <div v-for="(shows, index) in show" :key="index">
-        {{ shows.date }}
-        {{ shows.time }}
-        {{ shows.selected }}
-        {{ shows.postContents }}
+      <div v-for="(shows, index) in show" :key="index" class="showContainer">
+        <div class="date">
+          {{ shows.date }}
+          <br />
+        </div>
+        <div>
+          {{ shows.time }}
+          <br />
+        </div>
+        <div>
+          {{ shows.selected }}
+          <br />
+        </div>
+        <div>
+          {{ shows.postContents }}
+
+          <br />
+        </div>
         <div v-if="shows.images">
-          <img v-bind:src="shows.images" style="width: 300px; height: 180px" />
+          <img v-bind:src="shows.images" style="width: 1000px; height: 600px" />
         </div>
       </div>
-
-      <!-- <div class="content" v-html="whisper.content"></div>
-      <button
-        v-if="currentUser && currentUser.uid == user.id"
-        @click="showBtns = !showBtns"
-      >
-        <fa icon="ellipsis-v" />
-      </button>
-      <div v-if="showBtns" class="controls">
-        <li @click="deleteWhisper" style="color: red">delete</li>
-      </div> -->
     </li>
   </div>
 </template>
@@ -36,6 +41,7 @@
 import { db } from "@/firebase.js"
 import { auth } from "@/firebase.js"
 import firebase from "firebase"
+import Vue2Filters from 'vue2-filters'
 
 export default {
   props: ["id", "uid"],
@@ -73,11 +79,31 @@ export default {
       this.currentUser = user
     })
   },
+  mixins: [Vue2Filters.mixin]
 }
 </script>
 
 <style lang="stylus">
+.showContainer
+ font-size 20px
+h1
+    width fit-content
+    margin 0 auto
+    font-size 3.2rem
+    font-family cursive
+.itemContainer
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+  to bottom,
+  rgba(255, 255, 255, 1) 0%,
+  rgba(255, 201, 59, 1) 100%
+  );height 100%;
+  margin center
+
+
 .item
+  padding-top 25px
+  flex-flow column-reverse
   list-style none
   border-top 1px solid #eee
   padding 5px 15px
@@ -85,8 +111,9 @@ export default {
   flex-wrap no-wrap
   justify-content flex-start
   position relative
-  margin-top 150px
-  margin-left 250px
+
+
+
   .editor
     position relative
     width 100%

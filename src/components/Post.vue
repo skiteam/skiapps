@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <router-link to="/">
+      <h1>Beer & Chips</h1>
+    </router-link>
     <div class="time">
       {{ this.date }}
       {{ this.time }}
@@ -189,17 +192,14 @@ export default {
 
 <style>
 .container {
-  height: 600px;
-  margin: 20px;
   padding-top: 50px;
   background: rgb(255, 255, 255);
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 1) 0%,
-    rgba(255, 201, 59, 1) 100%,
-    rgba(0, 212, 255, 1) 100%
+    rgba(255, 201, 59, 1) 100%
   );
-  height: 100vh;
+  height: 100%;
 }
 .time {
   padding-top: 10px;
