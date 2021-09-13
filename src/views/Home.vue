@@ -35,6 +35,7 @@ export default {
   firestore() {
     return {
       whispers: db.collection("whispers"),
+      user: db.collection("users"),
     }
   },
   mixins: [Vue2Filters.mixin],
