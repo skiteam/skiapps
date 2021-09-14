@@ -15,16 +15,14 @@
         <div class="date">
           {{ shows.date }}
           <br />
-        </div>
-        <div>
           {{ shows.time }}
           <br />
         </div>
-        <div>
+        <div class="selectedTag">
           {{ shows.selected }}
           <br />
         </div>
-        <div>
+        <div class="textContainer">
           {{ shows.postContents }}
 
           <br />
@@ -85,7 +83,19 @@ export default {
 
 <style lang="stylus">
 .showContainer
- font-size 20px
+ font-size 30px
+ background-color #f0f8ff
+ width 1100px
+ margin-left auto
+ margin-right auto
+ border: 10px solid #000000;
+ .date
+   margin-left 850px
+   width 30px
+ .selectedTag
+   margin-right auto
+ .textContainer
+   white-space pre-wrap
 h1
     width fit-content
     margin 0 auto
