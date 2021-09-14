@@ -71,6 +71,7 @@ export default {
       url: "",
       item: null,
       uid: null,
+      timeStamp:"",
       date: "",
       time: "",
       week: ["(Sun)", "(Mon)", "(Tu)", "(Wed)", "(Thu)", "(Fri)", "(Sat)"],
@@ -100,6 +101,7 @@ export default {
           this.item = {
             date: this.date,
             time: this.time,
+            timeStamp: this.date + this.time,
             id: this.uid,
             selected: this.selected,
             postContents: this.postContents,
@@ -109,6 +111,7 @@ export default {
           this.item = {
             date: this.date,
             time: this.time,
+            timeStamp: this.date + this.time,
             id: this.uid,
             selected: this.selected,
             postContents: this.postContents,
