@@ -63,6 +63,7 @@ export default {
     firebase
       .firestore()
       .collection("tweets")
+      .orderBy("timeStamp","desc")
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
@@ -121,7 +122,7 @@ h1
 
 .item
   padding-top 25px
-  flex-flow column-reverse
+  flex-flow column
   list-style none
   border-top 1px solid #eee
   padding 5px 15px
