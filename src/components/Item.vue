@@ -41,7 +41,7 @@
 import { db } from "@/firebase.js"
 import { auth } from "@/firebase.js"
 import firebase from "firebase"
-import Vue2Filters from 'vue2-filters'
+import Vue2Filters from "vue2-filters"
 
 export default {
   props: ["id", "uid"],
@@ -79,7 +79,7 @@ export default {
       this.currentUser = user
     })
   },
-  mixins: [Vue2Filters.mixin]
+  mixins: [Vue2Filters.mixin],
 }
 </script>
 
