@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <router-link to="/">
-      <h1>Beer & Chips</h1>
+      <h1>🍺Beer & Chips🍟</h1>
     </router-link>
     <div class="time">
       {{ this.date }}
@@ -10,9 +10,9 @@
     <div class="box1">
       <select class="tag" v-model="selected">
         <option disabled value="">Please select #</option>
-        <option>#Beer</option>
-        <option>#Chips</option>
-        <option>#Both</option>
+        <option>#Beer🍺</option>
+        <option>#Chips🍟</option>
+        <option>#Both🍺🍟</option>
       </select>
       <div class="format">
         <textarea
