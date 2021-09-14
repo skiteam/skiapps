@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div v-if="currentUser" class="btns">
+    <div v-if="currentUser" class="btns" style="z-index:2147483647">
       <router-link to="/post">
         <button class="pen">✎</button>
       </router-link>
@@ -67,7 +67,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 header
-  
+  z-index 2
   position fixed
   top 0
   width 100%
@@ -75,7 +75,8 @@ header
   padding 10px
 
   .btns
-    position absolute
+    position absolute 
+    z-index 2147483647
     top 10px
     right 30px
     cursor pointer

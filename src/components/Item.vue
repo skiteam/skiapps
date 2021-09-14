@@ -1,7 +1,7 @@
 <template>
   <div class="itemContainer">
     <router-link to="/">
-      <h1>Beer & Chips</h1>
+      <h1>🍺Beer & Chips🍟</h1>
     </router-link>
     <li class="item">
       <div class="user-box">
@@ -24,11 +24,10 @@
         </div>
         <div class="textContainer">
           {{ shows.postContents }}
-
           <br />
         </div>
         <div v-if="shows.images">
-          <img v-bind:src="shows.images" style="width: 1000px; height: 600px" />
+          <img v-bind:src="shows.images" class="showImgs" style="width: 880px; height: 600px" />
         </div>
       </div>
     </li>
@@ -83,25 +82,34 @@ export default {
 
 <style lang="stylus">
 .showContainer
+ z-index 1
  font-size 30px
  background-color #f0f8ff
- width 1100px
+ width 900px
  margin-left auto
  margin-right auto
- border: 10px solid #000000;
+ border: 5px solid #d3d3d3;
  .date
-   margin-left 850px
+   margin-left 660px
    width 30px
  .selectedTag
-   margin-right auto
+   text-align left
+   width 70px
+   font-size 50px
  .textContainer
+   text-align left
    white-space pre-wrap
+   width 880px
+  .showImgs
+    border: 5px solid #d3d3d3;
+    border-radius 5%  
 h1
     width fit-content
     margin 0 auto
     font-size 3.2rem
     font-family cursive
 .itemContainer
+  z-index 0
   background: rgb(255, 255, 255);
   background: linear-gradient(
   to bottom,
